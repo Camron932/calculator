@@ -12,6 +12,7 @@ const seven = document.getElementById('seven');
 const eight = document.getElementById('eight');
 const nine = document.getElementById('nine');
 const zero = document.getElementById('zero');
+const deci = document.getElementById('deci');
 
 const add = document.getElementById('plus');
 const minus = document.getElementById('minus');
@@ -63,6 +64,79 @@ nine.onclick = function() {
 zero.onclick = function() {
     getNumber("0");
 }
+deci.onclick = function() {
+    decimal()
+}
+
+addEventListener('keypress', (e) => {
+    if (e.code == "Digit1") {
+        getNumber("1");
+    } else if (e.code == "Digit2") {
+        getNumber("2");
+    } else if (e.code == "Digit3") {
+        getNumber("3");
+    } else if (e.code == "Digit4") {
+        getNumber("4");
+    } else if (e.code == "Digit5") {
+        getNumber("5");
+    } else if (e.code == "Digit6") {
+        getNumber("6");
+    } else if (e.code == "Digit7") {
+        getNumber("7");
+    } else if (e.code == "Digit8" && e.shiftKey == false) {
+        getNumber("8");
+    } else if (e.code == "Digit9") {
+        getNumber("9");
+    } else if (e.code == "Digit0") {
+        getNumber("0");
+    } else if (e.code == "Minus") {
+        addRule = false;
+        subRule = true;
+        multRule = false;
+        divRule = false;
+            return addRule, subRule, multRule, divRule;
+    } else if (e.code == "Equal" && e.shiftKey == true) {
+        addRule = true;
+        subRule = false;
+        multRule = false;
+        divRule = false;
+            return addRule, subRule, multRule, divRule;
+    } else if (e.code == "Digit8" && e.shiftKey == true) {
+        addRule = false;
+        subRule = false;
+        multRule = true;
+        divRule = false;
+            return addRule, subRule, multRule, divRule;
+    } else if (e.code == "Slash") {
+        addRule = false;
+        subRule = false;
+        multRule = false;
+        divRule = true;
+            return addRule, subRule, multRule, divRule;
+    } else if (e.code == "Equal" || e.code == "Enter") {
+        if (secNum === '') {
+            display.innerHTML = `${firstNum}`
+        } else if (addRule === true || subRule === true || multRule === true || divRule === true) {
+            operate();
+            display.innerHTML = `${firstNum}`
+            secNum = '';
+        }
+    } else if (e.code == "KeyC") {
+        firstNum = '';
+        secNum = '';
+
+        addRule = false;
+        subRule = false;
+        multRule = false;
+        divRule = false;
+
+        display.innerHTML = 0;
+            return firstNum, secNum, addRule, subRule, multRule, divRule;
+    } else if (e.code == "Period") {
+        decimal();
+    }
+});
+
 
 add.addEventListener('click', () => {
     addRule = true;
@@ -93,15 +167,44 @@ divide.addEventListener('click', () => {
         return addRule, subRule, multRule, divRule;
 });
 
+function decimal() {
+    if (firstNum.includes(".") == true 
+    && addRule === false 
+    && subRule === false 
+    && multRule === false 
+    && divRule === false) {
+        display.innerHTML = `${firstNum}`;
+    } else if (secNum.includes(".") == true 
+    && (addRule === true 
+    || subRule === true 
+    || multRule === true 
+    || divRule === true)) {
+        display.innerHTML = `${secNum}`;
+    } else if (firstNum.includes(".") == false
+    && addRule === false 
+    && subRule === false 
+    && multRule === false 
+    && divRule === false) {
+        firstNum = firstNum + ".";
+        display.innerHTML = `${firstNum}`;
+        return firstNum;
+    } else { 
+        secNum = secNum + ".";
+        display.innerHTML = `${secNum}`;
+        return secNum;
+    }
+};
+
 function getNumber(num) {
     if (addRule === false && subRule === false && multRule === false && divRule === false) {
         firstNum = firstNum + num;
         display.innerHTML = `${firstNum}`;
         return firstNum;
-    } else if (addRule === true || subRule === true || multRule === true || divRule === true)
+    } else if (addRule === true || subRule === true || multRule === true || divRule === true) {
         secNum = secNum + num;
         display.innerHTML = `${secNum}`;
         return secNum;
+    }
 };
 
 display.innerHTML = 0;
@@ -109,28 +212,30 @@ display.innerHTML = 0;
 // Basic functions
 
 function addNum() {
-    let sum = parseInt(firstNum) + parseInt(secNum);
-    firstNum = sum;
+    let sum = parseFloat(firstNum) + parseFloat(secNum);
+    firstNum = sum.toString();
     return firstNum;
 }
 function subtractNum() {
-    let sum = parseInt(firstNum) - parseInt(secNum);
-    firstNum = sum;
+    let sum = parseFloat(firstNum) - parseFloat(secNum);
+    firstNum = sum.toString();
     return firstNum;
 }
 function multiplyNum() {
-    let sum = parseInt(firstNum) * parseInt(secNum);
-    firstNum = sum;
+    let sum = parseFloat(firstNum) * parseFloat(secNum);
+    firstNum = sum.toString();
     return firstNum;
 }
 function divideNum() {
-    let sum = parseInt(firstNum) / parseInt(secNum);
-    firstNum = sum;
+    let sum = parseFloat(firstNum) / parseFloat(secNum);
+    firstNum = sum.toString();
     return firstNum;
 }
 
 equal.addEventListener('click', () => {
-    if (addRule === true || subRule === true || multRule === true || divRule === true) {
+    if (secNum === '') {
+        display.innerHTML = `${firstNum}`
+    } else if (addRule === true || subRule === true || multRule === true || divRule === true) {
         operate();
         display.innerHTML = `${firstNum}`
         secNum = '';
