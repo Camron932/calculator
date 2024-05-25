@@ -60,9 +60,15 @@ body {
     width: 45px;
     margin: 2px;
     flex-wrap: wrap;
-    border: 1px solid black;
+    border: 2px solid black;
     align-items: center;
     justify-content: center;
+    box-shadow: 1px 1px 1px lightgray, -1px -1px 1px #6f6f6f, inset 1px 1px 1px lightgray, inset -1px -1px 1px lightgray;
+    transition: all 0.1s;
+}
+
+.numbers:active {
+    box-shadow: 1px 1px 1px gray, -1px -1px 1px gray, inset 1px 1px 1px gray, inset -1px -1px 1px gray;
 }
 
 .operCont {
@@ -88,6 +94,12 @@ body {
     align-items: center;
     justify-content: center;
     background-color: orange;
+    box-shadow: 1px 1px 1px lightgray, -1px -1px 1px #6f6f6f, inset 1px 1px 1px lightgray, inset -1px -1px 1px lightgray;
+    transition: all 0.1s;
+}
+
+.operators:active {
+    box-shadow: 1px 1px 1px gray, -1px -1px 1px gray, inset 1px 1px 1px gray, inset -1px -1px 1px gray;
 }
 
 #clear {
